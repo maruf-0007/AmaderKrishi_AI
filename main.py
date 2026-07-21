@@ -8,7 +8,12 @@ import google.generativeai as genai
 import base64
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 from database import Database, init_db
+
+# Load variables from a local .env file if present (no-op in production
+# environments that inject real env vars directly)
+load_dotenv()
 
 app = FastAPI(title="আমাদের কৃষি API")
 
@@ -28,7 +33,12 @@ FRONTEND_DIR = BASE_DIR / "frontend"
 app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 
 # ─── Gemini Setup ─────────────────────────────────────────────────────────────
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyB5VmFTsi5he9V_hDtzjagdZfsnO9tVd_8")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise RuntimeError(
+        "GEMINI_API_KEY environment variable is not set. "
+        "Copy .env.example to .env and add your key from https://aistudio.google.com/apikey"
+    )
 genai.configure(api_key=GEMINI_API_KEY)
 # FIX: correct model name (gemini-2.5-flash does not exist yet)
 text_model   = genai.GenerativeModel("gemini-2.5-flash")
