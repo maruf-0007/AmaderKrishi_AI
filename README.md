@@ -1,32 +1,32 @@
-# 🌾 আমাদের কৃষি AI (AmaderKrishi AI)
+# 🌾 AmaderKrishi AI
 
-বাংলাদেশের কৃষকদের জন্য একটি বাংলা ভাষার AI সহায়ক — টেক্সট, ছবি ও ভয়েসের মাধ্যমে কৃষি সংক্রান্ত প্রশ্নের উত্তর দেয়, ফসলের রোগ শনাক্ত করে, এবং চ্যাট ইতিহাস সংরক্ষণ করে। **FastAPI** ব্যাকএন্ড, **Google Gemini** AI, এবং vanilla HTML/CSS/JS ফ্রন্টএন্ড দিয়ে তৈরি।
+An AI-powered Bengali-language agricultural assistant designed for farmers in Bangladesh. It answers agriculture-related questions through **text, images, and voice**, detects crop diseases, and stores chat history. The project is built using a **FastAPI** backend, **Google Gemini AI**, and a **Vanilla HTML/CSS/JS** frontend.
 
-## ফিচার তালিকা
+## Features
 
-| ফিচার | বিবরণ |
-|---|---|
-| 💬 টেক্সট চ্যাট | বাংলায় কৃষি প্রশ্ন করুন |
-| 📷 ছবি আপলোড | ফসলের ছবি দিয়ে রোগ শনাক্ত করুন |
-| 🎤 ভয়েস চ্যাট | বাংলায় কথা বলুন (Chrome ব্রাউজার প্রয়োজন) |
-| 📚 ইতিহাস | ChatGPT-এর মতো কথোপকথন সংরক্ষণ |
-| 👤 মাল্টি-ইউজার | আলাদা লগইন ও ডেটা |
+| Feature         | Description                                |
+| --------------- | ------------------------------------------ |
+| 💬 Text Chat    | Ask agricultural questions in Bengali      |
+| 📷 Image Upload | Upload crop images to detect diseases      |
+| 🎤 Voice Chat   | Speak in Bengali (Chrome browser required) |
+| 📚 Chat History | Store conversations like ChatGPT           |
+| 👤 Multi-User   | Separate login and user data               |
 
-## প্রজেক্ট স্ট্রাকচার
+## Project Structure
 
-```
+```text
 .
-├── main.py           # FastAPI অ্যাপ — সব রুট
-├── database.py       # MySQL ডেটাবেস ও কুয়েরি
-├── requirements.txt  # Python প্যাকেজ
-├── .env.example      # পরিবেশ ভেরিয়েবলের টেমপ্লেট
+├── main.py           # FastAPI application — all routes
+├── database.py       # MySQL database and queries
+├── requirements.txt  # Python packages
+├── .env.example      # Environment variable template
 └── frontend/
-    └── index.html    # সম্পূর্ণ UI
+    └── index.html    # Complete UI
 ```
 
-## সেটআপ গাইড
+## Setup Guide
 
-### ধাপ ১ — রিপোজিটরি ক্লোন ও প্যাকেজ ইনস্টল
+### Step 1 — Clone the Repository and Install Packages
 
 ```bash
 git clone https://github.com/<your-username>/AmaderKrishi_AI.git
@@ -34,80 +34,85 @@ cd AmaderKrishi_AI
 pip install -r requirements.txt
 ```
 
-### ধাপ ২ — Gemini API Key নিন (বিনামূল্যে)
+### Step 2 — Get a Gemini API Key (Free)
 
-1. [aistudio.google.com](https://aistudio.google.com) এ যান
-2. Google অ্যাকাউন্ট দিয়ে লগইন করুন
-3. "Get API Key" ক্লিক করুন
-4. API Key কপি করুন
+1. Visit [Google AI Studio](https://aistudio.google.com)
+2. Sign in with your Google account
+3. Click **"Get API Key"**
+4. Copy your API key
 
-### ধাপ ৩ — MySQL সেটআপ
+### Step 3 — Set Up MySQL
 
 ```sql
 CREATE DATABASE amaderkrishi CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-### ধাপ ৪ — এনভায়রনমেন্ট ভেরিয়েবল সেট করুন
+### Step 4 — Configure Environment Variables
 
 ```bash
 cp .env.example .env
 ```
 
-তারপর `.env` ফাইলে আপনার তথ্য দিন:
-```
-GEMINI_API_KEY=আপনার_gemini_api_key
+Then add your information to the `.env` file:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=আপনার_mysql_পাসওয়ার্ড
+DB_PASSWORD=your_mysql_password
 DB_NAME=amaderkrishi
 ```
 
-> ⚠️ `.env` ফাইলটি কখনোই GitHub-এ কমিট করবেন না — এটি ইতিমধ্যে `.gitignore`-এ যুক্ত আছে।
+> ⚠️ **Never commit the `.env` file to GitHub** — it is already included in `.gitignore`.
 
-### ধাপ ৫ — Backend চালু করুন
+### Step 5 — Start the Backend
 
 ```bash
 uvicorn main:app --reload
 ```
 
-✅ সফল হলে দেখাবে: `আমাদের কৃষি AI চালু হয়েছে!`
+If successful, you should see:
 
-### ধাপ ৬ — Frontend খুলুন
+```text
+AmaderKrishi AI is running!
+```
 
-`frontend/index.html` ফাইলটি যেকোনো ব্রাউজারে খুলুন, অথবা VS Code Live Server দিয়ে চালু করুন।
+### Step 6 — Open the Frontend
 
-**গুরুত্বপূর্ণ**: ভয়েস ইনপুটের জন্য Chrome ব্যবহার করুন।
+Open the `frontend/index.html` file in any browser, or run it using **VS Code Live Server**.
+
+> **Important:** Use Google Chrome for voice input.
 
 ## API Endpoints
 
-| Method | URL | কাজ |
-|---|---|---|
-| POST | `/api/register` | নিবন্ধন |
-| POST | `/api/login` | লগইন |
-| POST | `/api/sessions` | নতুন সেশন |
-| GET | `/api/sessions/{user_id}` | সেশন তালিকা |
-| GET | `/api/history/{session_id}` | চ্যাট ইতিহাস |
-| POST | `/api/chat` | টেক্সট চ্যাট |
-| POST | `/api/chat-image` | ছবি বিশ্লেষণ |
-| DELETE | `/api/sessions/{id}` | সেশন মুছুন |
+| Method | URL                         | Description               |
+| ------ | --------------------------- | ------------------------- |
+| POST   | `/api/register`             | Register a new user       |
+| POST   | `/api/login`                | User login                |
+| POST   | `/api/sessions`             | Create a new chat session |
+| GET    | `/api/sessions/{user_id}`   | Get user's session list   |
+| GET    | `/api/history/{session_id}` | Get chat history          |
+| POST   | `/api/chat`                 | Text chat                 |
+| POST   | `/api/chat-image`           | Analyze an image          |
+| DELETE | `/api/sessions/{id}`        | Delete a chat session     |
 
-## সমস্যা সমাধান
+## Troubleshooting
 
-**CORS Error**: Backend চালু আছে কিনা চেক করুন (`http://localhost:8000`)
+**CORS Error:** Check whether the backend is running at `http://localhost:8000`.
 
-**DB Error**: MySQL চালু আছে কিনা এবং `.env`-এ পাসওয়ার্ড ঠিক আছে কিনা দেখুন
+**Database Error:** Make sure MySQL is running and the password in `.env` is correct.
 
-**ভয়েস কাজ করছে না**: Chrome ব্রাউজার ব্যবহার করুন এবং মাইক্রোফোন পারমিশন দিন
+**Voice Input Not Working:** Use Google Chrome and allow microphone permission.
 
-**API Key Error**: `.env` ফাইলে সঠিক Gemini API Key দিন
+**API Key Error:** Make sure you have entered the correct Gemini API key in the `.env` file.
 
-## টেক স্ট্যাক
+## Tech Stack
 
-- **Backend:** FastAPI, google-generativeai (Gemini), MySQL Connector
-- **Frontend:** Vanilla HTML/CSS/JS, Web Speech API (ভয়েস ইনপুট)
-- **Database:** MySQL
+* **Backend:** FastAPI, Google Generative AI (Gemini), MySQL Connector
+* **Frontend:** Vanilla HTML/CSS/JS, Web Speech API (Voice Input)
+* **Database:** MySQL
 
-## লাইসেন্স
+## License
 
-এই প্রজেক্টটি শিক্ষামূলক ব্যবহারের জন্য উন্মুক্ত।
+This project is open for educational use.
